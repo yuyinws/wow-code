@@ -1,0 +1,30 @@
+{
+  "name": "wowjoy-cli",
+  "description": "a vue file generator",
+  "version": "1.0.0",
+  "keywords": [
+    "generator",
+    "cli",
+    "vue"
+  ],
+  "scripts": {
+    "test":"wow-cli g ./test/test.vue --config ./test/config.json"
+  },
+  "bin": {
+    "wow-cli": "./bin/wow-cli.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^8.3.0",
+    "minimist": "^1.2.5"
+  },
+  "engine-strict": true,
+  "engines": {
+    "node": ">= 0.12"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
+}
