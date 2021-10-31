@@ -3,7 +3,7 @@
 const program = require('commander')
 const minimist = require('minimist')
 const chalk = require('chalk')
-program.version(`wow-cli ${require('../package.json').version}`)
+program.version(`wow-code ${require('../package.json').version}`)
 
 program
   .command('g <file-name>')

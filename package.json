@@ -1,18 +1,22 @@
 {
-  "name": "wowjoy-cli",
+  "name": "wow-code",
   "description": "a vue file generator",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "keywords": [
     "generator",
     "cli",
     "vue"
   ],
   "scripts": {
-    "test":"wow-cli g ./test/test.vue --config ./test/config.json"
+    "test": "wow-code g ./test/test.vue --config ./test/config.json"
   },
   "bin": {
-    "wow-cli": "./bin/wow-cli.js"
+    "wow-code": "./bin/wow-code.js"
   },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^8.3.0",
