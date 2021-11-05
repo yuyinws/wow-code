@@ -3,7 +3,7 @@
 const program = require('commander')
 const minimist = require('minimist')
 const chalk = require('chalk')
-program.version(`wow-code ${require('../package.json').version}`)
+program.version(`@wow-code ${require('../package.json').version}`)
 
 program
   .command('g <file-name>')
@@ -18,5 +18,13 @@ program
     }
     require('../lib/generator')(name, options)
   })
+
+program.command('ui').action(() => {
+  require('../lib/ui')
+})
+
+program.command('test').action(() => {
+  console.log(process.cwd())
+})
 
 program.parse()
