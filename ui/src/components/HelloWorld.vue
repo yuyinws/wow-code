@@ -1,45 +1,51 @@
+<template>
+  <button type @click="refetchTest">refetch</button>
+  <div class="flex">
+    <div class="text-red-700" v-for="item in path">{{ item }}\</div>
+  </div>
+  <div @click="handleFolderClick(item.name)" v-for="item in children">
+    {{item.name}}
+  </div>
+</template>
+
+
 <script setup>
-import { watch } from 'vue'
+import { watchEffect, ref, watch } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 
-const { result } = useQuery(gql`
-  query {
-    hello
+const path = ref([])
+const children = ref([])
+
+const vars = ref({
+  base: ''
+})
+const { result, refetch } = useQuery(gql`
+   query testQuery($base:String){
+    getFileList(base:$base){
+      path,
+      children {
+        name,
+        path
+      }
+    }
   }
-`)
+`, vars)
+
+const refetchTest = () => {
+  vars.value.base = 'D://nodeJs'
+  refetch()
+}
 
 watch(() => {
   console.log(result.value)
-})
-
-defineProps({
-  msg: String
+  if (result.value) {
+    path.value = result.value.getFileList.path.split('\\')
+    children.value = result.value.getFileList.children.filter((x) => !!x)
+  }
+  // let test = result.value.getFileList.path.split('//')
 })
 </script>
-
-<template>
-  <h1>{{ msg }}</h1>
-
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-  </p>
-
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">Vite Documentation</a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
-  </p>
-
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
-</template>
 
 <style scoped>
 a {

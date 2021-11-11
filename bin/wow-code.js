@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 
-const program = require('commander')
-const minimist = require('minimist')
-const chalk = require('chalk')
-program.version(`@wow-code ${require('../package.json').version}`)
+// const program = require('commander')
+// const minimist = require('minimist')
+// const chalk = require('chalk')
+
+import program from 'commander'
+import minimist from 'minimist'
+import chalk from 'chalk'
+import server from '../lib/ui.js'
+program.version(`@wow-code 0.0.1`)
 
 program
   .command('g <file-name>')
@@ -20,7 +25,7 @@ program
   })
 
 program.command('ui').action(() => {
-  require('../lib/ui')
+  server()
 })
 
 program.command('test').action(() => {
