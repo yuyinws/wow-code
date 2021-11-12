@@ -6,13 +6,13 @@ import path from 'path'
 import resolvers from './resolvers.mjs'
 import { typeDefs } from './schema.mjs'
 import { fileURLToPath } from 'url'
+import openBrowser from 'open'
+
 async function startApolloServer() {
   const app = express()
-  // const __dirname = path.resolve()
   const __filename = fileURLToPath(import.meta.url)
   const __dirname = path.dirname(__filename)
   const distPath = path.join(__dirname, '../dist')
-  // const distPath = '../dist'
   app.use(express.static(distPath))
   const httpServer = http.createServer(app)
   const server = new ApolloServer({
@@ -24,7 +24,8 @@ async function startApolloServer() {
   await server.start()
   server.applyMiddleware({ app })
   await new Promise((resolve) => httpServer.listen({ port: 3000 }, resolve))
-  console.log(`🚀 Server ready at http://localhost:3000${server.graphqlPath}`)
+  openBrowser(`http://localhost:3000`)
+  console.log(`🚀wow-cli ui ready at http://localhost:3000`)
 }
 
 export { startApolloServer as server }
