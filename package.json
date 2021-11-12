@@ -1,5 +1,5 @@
 {
-  "name": "wow-cli",
+  "name": "w-cli",
   "description": "a vue file generator",
   "version": "0.0.1",
   "keywords": [
@@ -8,10 +8,10 @@
     "vue"
   ],
   "scripts": {
-    "test": "wow-cli g ./test/test.vue --config ./test/config.json"
+    "test": "w-cli g ./test/test.vue --config ./test/config.json"
   },
   "bin": {
-    "wow-cli": "./bin/wow-cli.js"
+    "w-cli": "./bin/w-cli.js"
   },
   "files": [
     "/bin",
