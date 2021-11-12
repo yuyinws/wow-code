@@ -45,7 +45,7 @@ const resolvers = {
   Query: {
     getPerson: (parent, args, context, info) => {
       console.log(args)
-      cmd.run(`wow-code g test2.vue -c config.json`, (err, data) => {
+      cmd.run(`wow-cli g test2.vue -c config.json`, (err, data) => {
         console.log(err, data)
       })
 
