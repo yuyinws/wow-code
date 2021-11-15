@@ -8,7 +8,7 @@ import program from 'commander'
 import minimist from 'minimist'
 import chalk from 'chalk'
 import server from '../lib/ui.js'
-program.version(`@w-cli 0.0.1`)
+program.version(`@wow-code 0.0.1`)
 
 program
   .command('g <file-name>')

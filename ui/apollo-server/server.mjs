@@ -25,7 +25,7 @@ async function startApolloServer() {
   server.applyMiddleware({ app })
   await new Promise((resolve) => httpServer.listen({ port: 3000 }, resolve))
   openBrowser(`http://localhost:3000`)
-  console.log(`🚀w-cli ui ready at http://localhost:3000`)
+  console.log(`🚀wow-code ui ready at http://localhost:3000`)
 }
 
 export { startApolloServer as server }

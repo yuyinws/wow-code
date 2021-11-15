@@ -1,7 +1,7 @@
 const { readdir, lstat } = require('fs/promises')
 const cmd = require('node-cmd')
 
-cmd.run(`w-cli g test2.vue -c config.json`, (err, data) => {
+cmd.run(`wow-code g test2.vue -c config.json`, (err, data) => {
   console.log(err, data)
 })
 // const test = async () => {
