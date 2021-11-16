@@ -92,10 +92,7 @@
 import { ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { NButton, NModal, NCard, NInput, NDivider, NIcon } from 'naive-ui'
-import {
-  ArrowBackOutline,
-  FolderOutline
-} from '@vicons/ionicons5'
+import { ArrowBackOutline, FolderOutline } from '@vicons/ionicons5'
 import { Edit32Filled } from '@vicons/fluent'
 import { DoneRound } from '@vicons/material'
 import gql from 'graphql-tag'
