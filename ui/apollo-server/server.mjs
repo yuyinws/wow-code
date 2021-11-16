@@ -7,8 +7,13 @@ import resolvers from './resolvers.mjs'
 import { typeDefs } from './schema.mjs'
 import { fileURLToPath } from 'url'
 import openBrowser from 'open'
+import portfinder from 'portfinder'
 
-async function startApolloServer() {
+async function startApolloServer(options) {
+  let { port, slience } = options
+  if (!port) {
+    port = await portfinder.getPortPromise()
+  }
   const app = express()
   const __filename = fileURLToPath(import.meta.url)
   const __dirname = path.dirname(__filename)
@@ -23,9 +28,12 @@ async function startApolloServer() {
 
   await server.start()
   server.applyMiddleware({ app })
-  await new Promise((resolve) => httpServer.listen({ port: 3000 }, resolve))
-  openBrowser(`http://localhost:3000`)
-  console.log(`🚀wow-code ui ready at http://localhost:3000`)
+  await new Promise((resolve) => httpServer.listen({ port: port }, resolve))
+  if (!slience) {
+    openBrowser(`http://localhost:${port}`)
+  }
+
+  console.log(`🚀wow-code ui ready at http://localhost:${port}`)
 }
 
-export { startApolloServer as server }
+export { startApolloServer as server}

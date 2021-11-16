@@ -8,7 +8,7 @@
     "vue"
   ],
   "scripts": {
-    "test": "wow-code g ./test/test.vue --config ./test/config.json"
+    "test": "wow-code g .\\test\\test.vue --config .\\test\\config.json"
   },
   "bin": {
     "wow-code": "./bin/wow-code.js"

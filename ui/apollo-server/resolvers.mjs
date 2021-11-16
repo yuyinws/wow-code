@@ -51,12 +51,23 @@ const resolvers = {
 
       return args.age
     },
-    generator: (parent, { config }) => {
-      console.log(config)
-      return true
-    },
     getFileList: (parent, { base }) => {
       return list(base)
+    },
+  },
+  Mutation: {
+    generator: (parent, { config, path }) => {
+      config = JSON.parse(config)
+      console.log(config, path)
+      cmd.run(`wow-code g ${path} -j ${config}`, (err, data) => {
+        if (err) {
+          console.log('error')
+          return false
+        } else {
+          console.log('success')
+          return true
+        }
+      })
     },
   },
 }

@@ -7,9 +7,12 @@ const schema = gql`
   }
   type Query {
     getPerson(age: Int): Int
-    generator(config: String!): Boolean
     getFileList(base: String): Folder
   }
+  type Mutation {
+    generator(config: String!,path:String!): Boolean
+  }
+
 `
 
 export {
