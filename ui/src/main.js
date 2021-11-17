@@ -7,7 +7,10 @@ import {
 } from '@apollo/client/core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import './index.css'
-const link = createHttpLink({ uri: `/graphql` })
+
+const uri = import.meta.env.DEV ? 'http://localhost:4001/graphql' : '/graphql'
+
+const link = createHttpLink({ uri: uri })
 const cache = new InMemoryCache()
 const apolloClient = new ApolloClient({ link, cache })
 

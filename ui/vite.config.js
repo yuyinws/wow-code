@@ -8,10 +8,10 @@ export default defineConfig({
     port: 4000,
   },
   proxy: {
-    '^/api/.*': {
-      target: 'localhost:3000', // 万山医生工作站
-      changeOrigin: true,
-      rewrite: (path) => path.replace(/^\/api/, ''),
-    },
+    // '^/graphql/.*': {
+    //   target: 'localhost:4001',
+    //   changeOrigin: true,
+    //   rewrite: (path) => path.replace(/^\/graphql/, ''),
+    // },
   },
 })

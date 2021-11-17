@@ -21,6 +21,7 @@
     "graphql": "^16.0.1",
     "graphql-tag": "^2.12.5",
     "http": "^0.0.1-security",
+    "lodash": "^4.17.21",
     "naive-ui": "^2.20.3",
     "node-cmd": "^5.0.0",
     "open": "^8.4.0",

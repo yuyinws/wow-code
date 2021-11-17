@@ -2,6 +2,7 @@ import cmd from 'node-cmd'
 import { cwd } from 'process'
 import { readdir, lstat } from 'fs/promises'
 import path from 'path'
+import generator from '../../lib/generator.js'
 const isPlatformWindows = process.platform.indexOf('win') === 0
 
 const isDir = (file) => {
@@ -56,18 +57,13 @@ const resolvers = {
     },
   },
   Mutation: {
-    generator: (parent, { config, path }) => {
-      config = JSON.parse(config)
-      console.log(config, path)
-      cmd.run(`wow-code g ${path} -j ${config}`, (err, data) => {
-        if (err) {
-          console.log('error')
-          return false
-        } else {
-          console.log('success')
-          return true
-        }
-      })
+    generator: async (parent, { config, path }) => {
+      let response = {
+        results: true,
+        msg: '',
+      }
+      await generator(path,{json:config})
+      return response
     },
   },
 }

@@ -1,12 +1,53 @@
 <template>
-  <div>
-    <div>
-      {{ `${path.join('/')}/${fileName}` }}
+  <div class="bg-gray-100 h-screen">
+    <div class="text-5xl text-green-600 text-center pt-5">
+      Wow-Code Generator
     </div>
-    <n-button type="info" @click="generatorClick">生成文件</n-button>
-    <n-button color="#3B82F6" @click="isModalShow = !isModalShow"
-      >选择路径</n-button
+    <div
+      class="
+        flex
+        text-green-500
+        justify-center
+        items-center
+        text-xl
+        rounded-md
+        shadow-xl
+        mt-10
+        p-2
+        bg-white
+        w-full
+      "
     >
+      <div>文件路径:</div>
+      <div>
+        {{ `${path.join('/')}/${fileName}` }}
+      </div>
+      <n-icon
+        size="20"
+        class="mr-1 text-green-500 cursor-pointer mr-3 ml-3"
+        @click="isModalShow = !isModalShow"
+      >
+        <Edit32Filled />
+      </n-icon>
+      <img
+        :src="VueIcon"
+        @click="generatorClick"
+        class="cursor-pointer"
+        style="height: 20px; width: 20px"
+        alt=""
+      />
+    </div>
+    <div class="bg-white rounded-md mt-8 p-5">
+      <div>
+        <div class="text-gray-400">面包屑(使用逗号分隔)</div>
+        <n-input v-model:value="jsonForm.breadcrumbList" class="mt-4 w-1/4" placeholder="面包屑" size="small"></n-input>
+      </div>
+      <n-divider></n-divider>
+      <div>
+        <div class="text-gray-400">筛选项</div>
+        <n-input v-model:value="jsonForm.breadcrumbList" class="mt-4 w-1/4" placeholder="面包屑" size="small"></n-input>
+      </div>
+    </div>
     <n-modal
       title="文件路径选择"
       preset="card"
@@ -78,7 +119,7 @@
             <folder-outline></folder-outline>
           </n-icon>
           <div
-            class="hover:bg-green-100 rounded-md p-1 cursor-pointer flex-grow"
+            class="hover:bg-green-200 rounded-md p-1 cursor-pointer flex-grow"
           >
             {{ item.name }}
           </div>
@@ -92,27 +133,27 @@
 import { ref, watch } from 'vue'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { NButton, NModal, NCard, NInput, NDivider, NIcon } from 'naive-ui'
-import { ArrowBackOutline, FolderOutline } from '@vicons/ionicons5'
+import { ArrowBackOutline, FolderOutline, LogoVue } from '@vicons/ionicons5'
 import { Edit32Filled } from '@vicons/fluent'
 import { DoneRound } from '@vicons/material'
 import gql from 'graphql-tag'
+import VueIcon from '/public/favicon.ico'
+import _ from 'lodash'
 
 const isModalShow = ref(false)
 const isEditing = ref(false)
-const config = JSON.stringify({
-  breadcrumbList: ['业务订单', '检查预约'],
-  searchItem: [
-    {
-      type: 'input',
-      label: '输入框',
-    },
-  ],
-})
+// const config = JSON.stringify({
+//   breadcrumbList: ['业务订单', '检查预约','hhhhhh'],
+// })
 
 const path = ref([])
 const pathString = ref('')
 const fileName = ref('')
 const children = ref([])
+
+const jsonForm = ref({
+  breadcrumbList: null,
+})
 
 const params = ref({
   base: '',
@@ -132,13 +173,23 @@ const fileList = useQuery(
   params
 )
 
-const { mutate: generator } = useMutation(gql`
+const {
+  mutate: generator,
+  error: generatorError,
+  onDone: generatorDone,
+} = useMutation(gql`
   mutation generator($config: String!, $path: String!) {
-    generator(config: $config, path: $path)
+    generator(config: $config, path: $path) {
+      results
+      msg
+    }
   }
 `)
 
 const generatorClick = () => {
+  const _jsonForm = _.cloneDeep(jsonForm.value)
+  _jsonForm.breadcrumbList = _jsonForm.breadcrumbList.split(',')
+  let config = JSON.stringify(_jsonForm)
   let _path = path.value.join('//')
   _path = _path + `//${fileName.value}`
   generator({
@@ -146,6 +197,10 @@ const generatorClick = () => {
     path: _path,
   })
 }
+
+generatorDone((event) => {
+  console.log(event)
+})
 
 const handleFolderClick = (name) => {
   const _path = [...path.value]
@@ -193,6 +248,9 @@ watch(() => {
     children.value = fileList.result.value.getFileList.children.filter(
       (x) => !!x
     )
+  }
+  if (generatorError.value) {
+    console.log(generatorError.value)
   }
 })
 </script>
