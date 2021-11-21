@@ -1,6 +1,6 @@
 <template>
   <div class="font-mono bg-gray-100 min-h-screen p-8">
-    <div class="max-w-4xl mx-auto">
+    <div class="min-w-4xl mx-auto">
       <h1 class="text-5xl font-bold text-center mb-5">Wow-Code Generator</h1>
       <p class="text-center text-2xl mb-5 text-gray-600">
         Generator A Vue SFC Quickly

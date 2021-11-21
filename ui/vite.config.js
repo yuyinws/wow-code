@@ -14,4 +14,7 @@ export default defineConfig({
     //   rewrite: (path) => path.replace(/^\/graphql/, ''),
     // },
   },
+  build: {
+    outDir:'../lib/dist'
+  }
 })

@@ -1,7 +1,7 @@
 {
   "name": "wow-code",
-  "description": "a vue file generator",
-  "version": "0.0.3",
+  "description": "Generator Vue SFC Quickly",
+  "version": "0.1.8",
   "keywords": [
     "generator",
     "cli",
@@ -15,14 +15,20 @@
   },
   "files": [
     "/bin",
-    "/lib",
-    "/ui"
+    "/lib"
   ],
   "dependencies": {
+    "apollo-server-core": "^3.5.0",
+    "apollo-server-express": "^3.5.0",
     "chalk": "^4.1.2",
     "commander": "^8.3.0",
+    "express": "^4.17.1",
+    "graphql": "^16.0.1",
+    "http": "^0.0.1-security",
     "minimist": "^1.2.5",
-    "node-cmd": "^5.0.0"
+    "node-cmd": "^5.0.0",
+    "open": "^8.4.0",
+    "portfinder": "^1.0.28"
   },
   "engine-strict": true,
   "engines": {
