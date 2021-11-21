@@ -1,9 +1,15 @@
 {
-  "breadcrumbList":["业务订单","检查预约"],
-  "searchItem":[
+  "breadcrumbList": ["业务订单", "检查预约"],
+  "searchList": [
     {
-      "type":"input",
-      "label":"输入框"
+      "type": "input",
+      "label": "输入框"
+    }
+  ],
+  "tableList": [
+    {
+      "label": "姓名",
+      "props": "name"
     }
   ]
 }
