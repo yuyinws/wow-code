@@ -91,7 +91,7 @@ yarn add commander
 import program from 'commander'
 
 program
-  .command('g <file-name>')
+  .command('g <file-path>')
   .option('-c,--config <config>', 'config file path')
   .action((name, options) => {
     console.log(name, options)
@@ -144,11 +144,11 @@ async funtion(){
 <div v-click class="flex-grow">
 
 ```graphql
-type User {
+query User {
   id: ID
-  age: Number
+  age: Int
   name: String
-  phone: Number
+  phone: String
 }
 ```
 
@@ -211,3 +211,132 @@ type User {
 </div>
 
 </div>
+
+---
+
+# GraphQL-Server
+
+```shell
+yarn install apollo-server-core apollo-server-express express graphql http
+```
+
+<v-click>
+
+```js
+// server.js
+import { ApolloServer, gql } from 'apollo-server-express'
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
+import express from 'express'
+import http from 'http'
+
+(async function () {
+  const app = express()
+  const httpServer = http.createServer(app)
+  const server = new ApolloServer({
+    // 数据模型
+    typeDefs,
+    // 解析器
+    resolvers,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  })
+  await server.start()
+  server.applyMiddleware({ app })
+  await new Promise((resolve) => httpServer.listen({ port: 4040 }, resolve))
+  console.log('server ready at http://localhost:4040/graphql')
+})()
+
+```
+
+</v-click>
+
+---
+
+# GraphQL-Vue
+<a href="https://v4.apollo.vuejs.org/zh-cn/">Vue Apollo</a>
+
+
+```js
+// main.js
+import { createApp, h, provide } from 'vue'
+import App from './App.vue'
+import {ApolloClient,createHttpLink,InMemoryCache,} from '@apollo/client/core'
+import { DefaultApolloClient } from '@vue/apollo-composable'
+
+const uri = import.meta.env.DEV ? 'http://localhost:4040/graphql' : '/graphql'
+const link = createHttpLink({ uri: uri })
+const cache = new InMemoryCache()
+const apolloClient = new ApolloClient({ link, cache })
+
+createApp({
+  setup() {
+    provide(DefaultApolloClient, apolloClient)
+  },
+  render() {
+    return h(App)
+  },
+}).mount('#app')
+```
+
+---
+
+# GraphQL-Vue
+```vue
+<template>
+  {{ users }}
+</template>
+
+<script setup>
+import { watch } from 'vue'
+import { useQuery } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
+
+const { result: users } = useQuery(gql`
+  query getUsers {
+    users {
+      id
+      name
+      phone
+    }
+  }
+`)
+
+watch(() => {
+  console.log(users.value)
+})
+</script>
+<style scoped lang="scss"></style>
+```
+
+---
+
+##### 监听前端dist文件夹
+
+```js{5,6,10-13|all}
+// server.js
+import { ApolloServer, gql } from 'apollo-server-express'
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
+import express from 'express'
+import http from 'http'
+import { fileURLToPath } from 'url'
+import path from 'path'
+(async function () {
+  const app = express()
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = path.dirname(__filename)
+  const distPath = path.join(__dirname, './ui/dist/')
+  app.use(express.static(distPath))
+  const httpServer = http.createServer(app)
+  const server = new ApolloServer({
+    // 数据模型
+    typeDefs,
+    // 解析器
+    resolvers,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  })
+  await server.start()
+  server.applyMiddleware({ app })
+  await new Promise((resolve) => httpServer.listen({ port: 4040 }, resolve))
+  console.log('server ready at http://localhost:4040/graphql')
+})()
+
+```
