@@ -6,8 +6,6 @@ import chalk from 'chalk'
 import server from '../lib/ui.js'
 import generator from '../lib/generator.js'
 
-chalk.level = 2
-
 program.version(`@wow-code 0.0.1`)
 program
   .command('g <file-name>')

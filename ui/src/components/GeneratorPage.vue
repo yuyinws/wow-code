@@ -2,8 +2,8 @@
   <div class="font-mono bg-gray-100 min-h-screen p-8">
     <div class="min-w-4xl mx-auto">
       <h1 class="text-5xl font-bold text-center mb-5">Wow-Code Generator</h1>
-      <p class="text-center text-2xl mb-5 text-gray-600">
-        Generator A Vue SFC Quickly
+      <p class="text-center text-2xl mb-3 text-gray-600">
+        Generator Vue SFC Quickly
       </p>
       <div class="text-center">
         <span
@@ -32,9 +32,10 @@
           justify-center
           items-center
           text-xl
+          flex-wrap
           rounded-md
           hover:shadow-md
-          mt-5
+          mt-3
           p-2
           text-gray-500
           bg-white
@@ -269,6 +270,7 @@ import {
   NIcon,
   NSelect,
   NTooltip,
+  useMessage
 } from 'naive-ui'
 import {
   ArrowBackOutline,
@@ -283,6 +285,7 @@ import gql from 'graphql-tag'
 import VueIcon from '/public/favicon.ico'
 import _ from 'lodash'
 
+const message = useMessage()
 const isModalShow = ref(false)
 const isEditing = ref(false)
 // const config = JSON.stringify({
@@ -391,7 +394,9 @@ const generatorClick = () => {
 }
 
 generatorDone((event) => {
-  console.log(event)
+  if (event.data.generator.results) {
+    message.success('文件生成成功!')
+  }
 })
 
 const handleFolderClick = (name) => {
@@ -445,14 +450,17 @@ const goPage = (index) => {
 
 watch(() => {
   if (fileList.result.value) {
-    console.log(fileList.result.value)
     path.value = fileList.result.value.getFileList.path.split('\\')
     children.value = fileList.result.value.getFileList.children.filter(
       (x) => !!x
     )
   }
+  if(fileList.error.value) {
+    console.log(fileList.error.value)
+    message.error('获取文件失败')
+  }
   if (generatorError.value) {
-    console.log(generatorError.value)
+    message.error('文件生成失败')
   }
 })
 </script>
