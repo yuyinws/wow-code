@@ -33,6 +33,13 @@ drawings:
 
 # CLI 交互
 
+```shell
+yarn global add wow-code
+#or
+npm install -g wow-code
+```
+
+
 ```shell {1,2,3|1,2,4}
 # file-path：生成文件的路径
 # config-path：配置文件的路径
