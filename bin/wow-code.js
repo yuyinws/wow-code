@@ -5,8 +5,10 @@ import minimist from 'minimist'
 import chalk from 'chalk'
 import server from '../lib/ui.js'
 import generator from '../lib/generator.js'
-program.version(`@wow-code 0.0.1`)
 
+chalk.level = 2
+
+program.version(`@wow-code 0.0.1`)
 program
   .command('g <file-name>')
   .option('-c,--config <config>', 'config file path')
@@ -32,8 +34,8 @@ program
     server(options)
   })
 
-program.command('test').action(() => {
-  console.log(process.cwd())
-})
+// program.command('test').action(() => {
+//   console.log(chalk.blue('\nhello')+'world'+chalk.red('!\n'))
+// })
 
 program.parse()
