@@ -6,7 +6,7 @@ import chalk from 'chalk'
 import server from '../lib/ui.js'
 import generator from '../lib/generator.js'
 
-program.version(`@wow-code 0.0.1`)
+program.version(`@wow-code 1.1.2`)
 program
   .command('g <file-name>')
   .option('-c,--config <config>', 'config file path')

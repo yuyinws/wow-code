@@ -288,10 +288,6 @@ import _ from 'lodash'
 const message = useMessage()
 const isModalShow = ref(false)
 const isEditing = ref(false)
-// const config = JSON.stringify({
-//   breadcrumbList: ['业务订单', '检查预约','hhhhhh'],
-// })
-
 const path = ref([])
 const pathString = ref('')
 const fileName = ref('demo.vue')
@@ -385,8 +381,8 @@ const generatorClick = () => {
   _jsonForm.breadcrumbList = _jsonForm.breadcrumbList.split(',')
   let config = JSON.stringify(_jsonForm)
   console.log(config)
-  let _path = path.value.join('//')
-  _path = _path + `//${fileName.value}`
+  let _path = path.value.join('/')
+  _path = _path + `/${fileName.value}`
   generator({
     config: config,
     path: _path,
@@ -402,7 +398,7 @@ generatorDone((event) => {
 const handleFolderClick = (name) => {
   const _path = [...path.value]
   _path.push(name)
-  const base = _path.join('\\')
+  const base = _path.join('/')
   params.value.base = base
   fileList.refetch()
 }
@@ -411,7 +407,7 @@ const handlePathClick = (index) => {
   const originLen = path.value.length
   const _path = [...path.value]
   _path.splice(index + 1, originLen - index)
-  const base = _path.join('\\')
+  const base = _path.join('/')
   params.value.base = base
   fileList.refetch()
 }
@@ -419,7 +415,7 @@ const handlePathClick = (index) => {
 const lastPath = () => {
   const _path = [...path.value]
   _path.pop()
-  const base = _path.join('\\')
+  const base = _path.join('/')
   params.value.base = base
   fileList.refetch()
 }
@@ -429,7 +425,7 @@ const editPath = () => {
     isEditing.value = false
     const _path = pathString.value.split('/')
     path.value = _path
-    params.value.base = _path.join('\\')
+    params.value.base = _path.join('/')
     fileList.refetch()
   } else {
     isEditing.value = true
@@ -450,7 +446,12 @@ const goPage = (index) => {
 
 watch(() => {
   if (fileList.result.value) {
-    path.value = fileList.result.value.getFileList.path.split('\\')
+    let splitSuffix = '\\'
+    // 适配unix系统路径
+    if (fileList.result.value.getFileList.path.indexOf('/') > -1 ){
+      splitSuffix = '/'
+    }
+    path.value = fileList.result.value.getFileList.path.split(splitSuffix)
     children.value = fileList.result.value.getFileList.children.filter(
       (x) => !!x
     )
