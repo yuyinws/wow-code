@@ -5,8 +5,9 @@ import minimist from 'minimist'
 import chalk from 'chalk'
 import server from '../lib/ui.js'
 import generator from '../lib/generator.js'
+import version from '../lib/util/version.cjs'
 
-program.version(`@wow-code 1.1.2`)
+program.version(`wow-code v${version}`)
 program
   .command('g <file-name>')
   .option('-c,--config <config>', 'config file path')
