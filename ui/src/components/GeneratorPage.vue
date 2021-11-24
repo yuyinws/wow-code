@@ -76,7 +76,10 @@
           <div class="text-gray-500 text-xl">配置项</div>
           <n-tooltip placement="top" trigger="hover">
             <template #trigger>
-              <n-icon class="text-gray-500 text-xl ml-3 cursor-pointer">
+              <n-icon
+                @click="copyJSON"
+                class="text-gray-500 text-xl ml-3 cursor-pointer"
+              >
                 <CopyOutline />
               </n-icon>
             </template>
@@ -270,7 +273,7 @@ import {
   NIcon,
   NSelect,
   NTooltip,
-  useMessage
+  useMessage,
 } from 'naive-ui'
 import {
   ArrowBackOutline,
@@ -330,6 +333,17 @@ const TypeOptions = [
 const params = ref({
   base: '',
 })
+const copyJSON = async () => {
+  try {
+    let _jsonForm = _.cloneDeep(jsonForm.value)
+    _jsonForm.breadcrumbList = _jsonForm.breadcrumbList.split(',')
+    _jsonForm = JSON.stringify(_jsonForm)
+    await navigator.clipboard.writeText(_jsonForm)
+    message.success('复制成功!')
+  } catch (err) {
+    console.log(err)
+  }
+}
 const addSearchItem = () => {
   let _searchItem = _.cloneDeep(searchItem)
   _searchItem.id = new Date().valueOf()
@@ -448,7 +462,7 @@ watch(() => {
   if (fileList.result.value) {
     let splitSuffix = '\\'
     // 适配unix系统路径
-    if (fileList.result.value.getFileList.path.indexOf('/') > -1 ){
+    if (fileList.result.value.getFileList.path.indexOf('/') > -1) {
       splitSuffix = '/'
     }
     path.value = fileList.result.value.getFileList.path.split(splitSuffix)
@@ -456,7 +470,7 @@ watch(() => {
       (x) => !!x
     )
   }
-  if(fileList.error.value) {
+  if (fileList.error.value) {
     console.log(fileList.error.value)
     message.error('获取文件失败')
   }
