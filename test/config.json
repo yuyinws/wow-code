@@ -1,15 +1,43 @@
 {
-  "breadcrumbList": ["业务订单", "检查预约"],
+  "breadcrumbList": ["一级菜单", "二级菜单", "三级菜单"],
   "searchList": [
     {
       "type": "input",
-      "label": "输入框"
+      "label": "姓名",
+      "param": "name"
+    },
+    {
+      "type": "select",
+      "label": "医院",
+      "param": "hospital"
+    },
+    {
+      "type": "datePicker",
+      "label": "日期",
+      "param":"date"
+    },
+    {
+      "type": "timePicker",
+      "label": "时间",
+      "param": "time"
     }
   ],
   "tableList": [
     {
-      "label": "姓名",
-      "props": "name"
+      "props": "index",
+      "label": "序号"
+    },
+    {
+      "props": "name",
+      "label": "姓名"
+    },
+    {
+      "props": "age",
+      "label": "年龄"
+    },
+    {
+      "props": "phone",
+      "label": "电话"
     }
   ]
 }
