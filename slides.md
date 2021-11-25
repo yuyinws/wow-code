@@ -156,6 +156,8 @@ query User {
   age: Int
   name: String
   phone: String
+  created_at: String
+  update_at: String
 }
 ```
 
@@ -198,6 +200,7 @@ query User {
   User {
     name
     phone
+    created_at
   }
 }
 ```
@@ -210,7 +213,8 @@ query User {
 {
   "User": {
     "name": "小明",
-    "phone": "15577728881"
+    "phone": "15577728881",
+    "created_at": "2020-09-01 22:11:33"
   }
 }
 ```
@@ -318,7 +322,7 @@ watch(() => {
 
 ##### 监听前端dist文件夹
 
-```js{5,6,10-13|all}
+```js{6,7,10-13|all}
 // server.js
 import { ApolloServer, gql } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
